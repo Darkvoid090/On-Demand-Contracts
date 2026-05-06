@@ -1,6 +1,6 @@
 {
   "id": "OnDemandContracts",
-  "version": "0.1.0",
+  "version": "0.2.3",
   "display_name": "On-Demand Contracts",
   "description_short": "Adds an in-game editor for creating custom world-map settlement contracts stored in JSON.",
   "authors": ["MaD_MaN"],
