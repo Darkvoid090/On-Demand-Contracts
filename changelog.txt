@@ -1,0 +1,27 @@
+=======================
+On-Demand Contracts
+Changelog
+=======================
+v0.2.3:
+
+• Improved save compatibility for custom contracts.
+• Deleted contracts are now handled more safely and should no longer break saves in most cases.
+• Added automatic fallback recovery for missing contract prototypes.
+• Improved compatibility with older saves using deleted contracts.
+
+=======================
+
+[UI Changes]
+
+• Removed dark background tint when opening the mod window.
+• The game can now be interacted with while the mod window is open.
+• Fixed issue where the mod window stopped working after reloading a save without restarting the game.
+
+=======================
+
+[Important]
+
+• Do not manually delete the backup JSON files if older saves may still use those contracts.
+• Existing saves created with older versions should continue working normally.
+
+=======================

@@ -1,48 +1,156 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <AssemblyName>OnDemandContracts</AssemblyName>
+    <RootNamespace>OnDemandContracts</RootNamespace>
+
+    <Version>0.2.3</Version>
+
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <TargetFramework>net48</TargetFramework>
     <LangVersion>latest</LangVersion>
     <DebugType>none</DebugType>
     <OutputPath>bin\$(Configuration)\OnDemandContracts\</OutputPath>
   </PropertyGroup>
+
   <ItemGroup>
     <None Update="manifest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+
     <Reference Include="0Harmony">
       <HintPath>lib\0Harmony.dll</HintPath>
       <Private>true</Private>
     </Reference>
+
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+
     <Reference Include="Mafi">
       <HintPath>$(COI_ROOT)\Captain of Industry_Data\Managed\Mafi.dll</HintPath>
       <Private>false</Private>
     </Reference>
+
     <Reference Include="Mafi.Base">
       <HintPath>$(COI_ROOT)\Captain of Industry_Data\Managed\Mafi.Base.dll</HintPath>
       <Private>false</Private>
     </Reference>
+
     <Reference Include="Mafi.Core">
       <HintPath>$(COI_ROOT)\Captain of Industry_Data\Managed\Mafi.Core.dll</HintPath>
       <Private>false</Private>
     </Reference>
+
     <Reference Include="Mafi.Unity">
       <HintPath>$(COI_ROOT)\Captain of Industry_Data\Managed\Mafi.Unity.dll</HintPath>
       <Private>false</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
-    </Reference>
+
     <Reference Include="System.Core" />
+
     <Reference Include="UnityEngine.IMGUIModule">
       <HintPath>$(COI_ROOT)\Captain of Industry_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
+
     <Reference Include="UnityEngine.UIElementsModule">
       <HintPath>$(COI_ROOT)\Captain of Industry_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>
+
+  <Target Name="GenerateManifest" BeforeTargets="Build">
+    <PropertyGroup>
+      <ManifestJson>
+        {
+        "id": "OnDemandContracts",
+        "version": "0.2.3",
+        "display_name": "On-Demand Contracts",
+        "description_short": "Adds an in-game editor for creating custom world-map settlement contracts stored in JSON.",
+        "authors": ["MaD_MaN"],
+        "links": [ "https://hub.coigame.com/Mod/49/On-Demand-Contracts" ],
+        "min_game_version": "0.8.3",
+        "max_verified_game_version": "0.8.4",
+        "primary_dlls": ["OnDemandContracts.dll"],
+        "mod_dependencies": [],
+        "optional_mod_dependencies": [],
+        "incompatible_mods": [],
+        "non_locking_dll_load": false,
+        "can_add_to_saved_game": true,
+        "can_remove_from_saved_game": false,
+        "primary_mod_class_name": "OnDemandContractsMod"
+        }
+
+      </ManifestJson>
+    </PropertyGroup>
+
+    <WriteLinesToFile
+        File="$(MSBuildProjectDirectory)\manifest.json"
+        Lines="$(ManifestJson)"
+        Overwrite="true" />
+  </Target>
+  <Target Name="UpdateManifestVersion" BeforeTargets="Build">
+
+    <ReadLinesFromFile File="$(MSBuildProjectDirectory)\manifest.json">
+      <Output TaskParameter="Lines" ItemName="ManifestLines" />
+    </ReadLinesFromFile>
+
+    <ItemGroup>
+      <UpdatedManifestLines Include="@(ManifestLines)">
+        <Text>$([System.Text.RegularExpressions.Regex]::Replace('%(Identity)', '&quot;version&quot;\s*:\s*&quot;[^&quot;]+&quot;', '&quot;version&quot;: &quot;$(Version)&quot;'))</Text>
+      </UpdatedManifestLines>
+    </ItemGroup>
+
+    <WriteLinesToFile
+        File="$(MSBuildProjectDirectory)\manifest.json"
+        Lines="@(UpdatedManifestLines->'%(Text)')"
+        Overwrite="true" />
+
+  </Target>
+
+  <Target Name="PostBuildCopy" AfterTargets="Build">
+
+    <PropertyGroup>
+      <ModOutput>$(APPDATA)\Captain of Industry\Mods\OnDemandContracts</ModOutput>
+    </PropertyGroup>
+
+    <MakeDir Directories="$(ModOutput)" />
+
+    <Copy SourceFiles="$(TargetPath)"
+          DestinationFolder="$(ModOutput)"
+          OverwriteReadOnlyFiles="true"
+          SkipUnchangedFiles="false" />
+
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\manifest.json"
+          DestinationFolder="$(ModOutput)"
+          OverwriteReadOnlyFiles="true"
+          SkipUnchangedFiles="false" />
+
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\lib\0Harmony.dll"
+          DestinationFolder="$(ModOutput)"
+          OverwriteReadOnlyFiles="true"
+          SkipUnchangedFiles="false"
+          Condition="Exists('$(MSBuildProjectDirectory)\lib\0Harmony.dll')" />
+
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\lib\Newtonsoft.Json.dll"
+          DestinationFolder="$(ModOutput)"
+          OverwriteReadOnlyFiles="true"
+          SkipUnchangedFiles="false"
+          Condition="Exists('$(MSBuildProjectDirectory)\lib\Newtonsoft.Json.dll')" />
+
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\changelog.txt"
+      DestinationFolder="$(ModOutput)"
+      OverwriteReadOnlyFiles="true"
+      SkipUnchangedFiles="false"
+      Condition="Exists('$(MSBuildProjectDirectory)\changelog.txt')" />
+
+    <Touch Files="$(ModOutput)\$(AssemblyName).dll;$(ModOutput)\manifest.json"
+           Time="$([System.DateTime]::Now)"
+           AlwaysCreate="false" />
+
+  </Target>
+
 </Project>
