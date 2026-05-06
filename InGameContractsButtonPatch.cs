@@ -18,7 +18,6 @@ namespace OnDemandContracts;
 public static class InGameContractsButtonPatch
 {
     private static readonly HashSet<int> s_addedToTabs = [];
-    private static OnDemandContractsWindow s_window;
     private static UiRoot s_uiRoot;
 
     private static IEnumerable<MethodBase> TargetMethods()
@@ -60,7 +59,11 @@ public static class InGameContractsButtonPatch
 
     public static void SetUiRoot(UiRoot root)
     {
-        s_uiRoot = root;
+        if (!ReferenceEquals(s_uiRoot, root))
+        {
+            s_uiRoot = root;
+            s_addedToTabs.Clear();
+        }
     }
 
     public static void OpenWindow()
@@ -79,13 +82,10 @@ public static class InGameContractsButtonPatch
 
         try
         {
-            if (s_window == null)
-            {
-                s_window = new OnDemandContractsWindow(OnDemandContractsMod.StoredProtosDb);
-                s_window.DarkMask();
-            }
+            var window = new OnDemandContractsWindow(OnDemandContractsMod.StoredProtosDb);
 
-            s_window.Open(s_uiRoot);
+            // No DarkMask = no screen tint, no modal input block.
+            window.Open(s_uiRoot);
         }
         catch (Exception ex)
         {

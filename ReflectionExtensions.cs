@@ -18,4 +18,27 @@ internal static class ReflectionExtensions {
         else if (field != null) field.SetValue(target, newCollection);
         else throw new InvalidOperationException("Cannot write back " + memberName);
     }
+    public static T UniversalGetPrivateProperty<T>(object obj, string name) where T : class
+    {
+        if (obj == null)
+            return null;
+
+        var type = obj.GetType();
+
+        while (type != null)
+        {
+            var field = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            if (field != null)
+                return field.GetValue(obj) as T;
+
+            var prop = type.GetProperty(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            if (prop != null)
+                return prop.GetValue(obj) as T;
+
+            type = type.BaseType;
+        }
+
+        return null;
+    }
 }
+

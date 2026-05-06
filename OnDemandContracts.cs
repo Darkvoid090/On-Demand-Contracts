@@ -41,7 +41,10 @@ public sealed class OnDemandContractsMod : IMod, IDisposable
         if (!s_harmonyPatchApplied)
         {
             s_harmony = new Harmony("OnDemandContracts.HudEntry");
-            s_harmony.PatchCategory(typeof(OnDemandContractsMod).Assembly, "OnDemandContractsHudEntry");
+            var assembly = typeof(OnDemandContractsMod).Assembly;
+
+            s_harmony.PatchCategory(assembly, "OnDemandContractsHudEntry");
+            s_harmony.PatchCategory(assembly, "OnDemandContractsSaveCompat");
             s_harmonyPatchApplied = true;
         }
 
@@ -73,39 +76,40 @@ public sealed class OnDemandContractsMod : IMod, IDisposable
 
         File.WriteAllText(ContractsFilePath, JsonConvert.SerializeObject(file, Formatting.Indented));
     }
-
-    private void RegisterCustomContracts(ProtosDb protosDb)
+    private void RegisterContractsFromFile(ProtosDb protosDb, string path, bool allowVillageAttach)
     {
-        if (string.IsNullOrWhiteSpace(ContractsFilePath) || !File.Exists(ContractsFilePath))
-        {
-            Log.Warning("[On-Demand Contracts] Contracts JSON not found: " + ContractsFilePath);
+        if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
             return;
-        }
 
         CustomContractsFile file;
+
         try
         {
-            file = JsonConvert.DeserializeObject<CustomContractsFile>(File.ReadAllText(ContractsFilePath));
+            file = JsonConvert.DeserializeObject<CustomContractsFile>(
+                File.ReadAllText(path)
+            );
         }
         catch (Exception ex)
         {
-            Log.Warning("[On-Demand Contracts] Invalid contracts JSON file " + ContractsFilePath + ": " + ex.Message);
+            Log.Warning("[On-Demand Contracts] Invalid contracts JSON file " + path + ": " + ex.Message);
             return;
         }
 
         if (file?.Contracts == null)
-        {
-            Log.Warning("[On-Demand Contracts] Contracts JSON has no Contracts list: " + ContractsFilePath);
             return;
-        }
 
         foreach (var contract in file.Contracts)
         {
-            TryRegisterContract(protosDb, contract);
+            TryRegisterContract(protosDb, contract, allowVillageAttach);
         }
     }
+    private void RegisterCustomContracts(ProtosDb protosDb)
+    {
+        RegisterContractsFromFile(protosDb, ContractsFilePath, allowVillageAttach: true);
+        RegisterContractsFromFile(protosDb, DeletedContractsBackupFilePath, allowVillageAttach: false);
+    }
 
-    private bool TryRegisterContract(ProtosDb protosDb, CustomContractData data)
+    private bool TryRegisterContract(ProtosDb protosDb, CustomContractData data, bool allowVillageAttach)
     {
         try
         {
@@ -137,17 +141,14 @@ public sealed class OnDemandContractsMod : IMod, IDisposable
                 data.RequiredReputation
             ));
 
-            if (!data.IsDeleted && data.IsEnabled)
+            if (allowVillageAttach && !data.IsDeleted && data.IsEnabled)
             {
-                if (!data.IsDeleted && data.IsEnabled)
-                {
-                    village.Contracts = village.Contracts.Add(contract);
-                }
+                village.Contracts = village.Contracts.Add(contract);
                 Log.Info("[On-Demand Contracts] Added contract '" + data.Name + "' to " + data.VillageId);
             }
             else
             {
-                Log.Info("[On-Demand Contracts] Registered inactive contract proto '" + data.Name + "' for save compatibility.");
+                Log.Info("[On-Demand Contracts] Registered hidden contract proto '" + data.Name + "' for save compatibility.");
             }
             return true;
         }
