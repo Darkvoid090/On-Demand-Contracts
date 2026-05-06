@@ -1,6 +1,5 @@
 ⚠️ Disclaimer: Use at your own risk.
 • This mod interacts with save-critical data (contracts), and incorrect deletion or modification can break saves.
-• It was made for my personal use
 • I am not responsible for lost or corrupted saves.
 • Always keep a backup of your saves if you plan to experiment.
 
@@ -21,47 +20,27 @@
 =======================
 
 ⚠️ IMPORTANT – READ THIS
-Contracts cannot be safely removed from saves because of serialization issues (maybe possible but currently beyond my abilities), Therefore:
+Contracts cannot be totally removed from saves because of serialization issues, only hidden (maybe possible but currently beyond my abilities), Therefore:
 
-• 🗑️ Delete → moves contract to a backup file, it will not be loaded again until you restore it.
-• ❌ If your save still uses it →  save may fail to load.
+• 🗑️ Delete → moves contract to a backup file, it will not be loaded again until you restore it (it is hidden from the game contract list but not deleted)
+• ✅ If your save still uses it → It will load normally, provided you do not delete or modify OnDemandContracts_deleted_backup.json
 
 =======================
 
 ✅ Enable vs ❌ Delete
 
-• ✅ Enabled toggle → safe, affects new saves only.
-• ❌ Delete →  risky, can break saves unless you are deleting unused contracts.
+• ✅ Enabled toggle → hides the contract from the in-game list without removing it from the main contract list.
+• ❌ Delete         → hides the contract from the in-game list while also removing it from the main contract list. Moves the contract to the backup file OnDemandContracts_deleted_backup.json.
 
 =======================
 
-🔧 If your save fails to load due to deleted contract you can recover it in 4 simple steps:
+🚫 DO NOT EDIT OR REMOVE JSON FILES
 
-1- 🎮 Start a new game with only this mod enabled.
-2- 🪟 Open mod window → go to Deleted tab (X).
-3- ♻️ Restore the deleted contract.
-4- 💾 Load your original save again.
-
-⚠️ This only works if you did not manually edit or delete the mod's json files!
+• ❌ Deleting JSON = broken save.
+• ❌ Manually editing JSON = broken save.
 
 =======================
 
-🚫 DO NOT EDIT JSON FILES
-
-• ❌ Deleting JSON =  broken save
-• ❌ Removing a contract used in a save =  broken save until you restore that contract.
-
-=======================
-
-🛡️ Safe workaround
-
-Set contract to:
-• 📥 Input = Yellowcake
-• 📤 Output = Yellowcake
-• 🔢 Ratio = 100 → 100
-This makes it useless without breaking anything, while also moving it to the bottom of the contract list.
-
-=========================
 # Screenshots
 
 ![Screenshot 1](Screenshots/Screenshot_2026-04-29_002034.png)
