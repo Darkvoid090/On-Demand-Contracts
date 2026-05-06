@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>OnDemandContracts</AssemblyName>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <DebugType>none</DebugType>
+    <OutputPath>bin\$(Configuration)\OnDemandContracts\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Update="manifest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Reference Include="0Harmony">
+      <HintPath>lib\0Harmony.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Mafi">
+      <HintPath>$(COI_ROOT)\Captain of Industry_Data\Managed\Mafi.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Mafi.Base">
+      <HintPath>$(COI_ROOT)\Captain of Industry_Data\Managed\Mafi.Base.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Mafi.Core">
+      <HintPath>$(COI_ROOT)\Captain of Industry_Data\Managed\Mafi.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Mafi.Unity">
+      <HintPath>$(COI_ROOT)\Captain of Industry_Data\Managed\Mafi.Unity.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>$(COI_ROOT)\Captain of Industry_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>$(COI_ROOT)\Captain of Industry_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+</Project>
