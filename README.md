@@ -59,7 +59,17 @@ Set contract to:
 • 📥 Input = Yellowcake
 • 📤 Output = Yellowcake
 • 🔢 Ratio = 100 → 100
-
 This makes it useless without breaking anything, while also moving it to the bottom of the contract list.
+
+=========================
+# Screenshots
+
+![Screenshot 1](Screenshots/Screenshot_2026-04-29_002034.png)
+
+![Screenshot 2](Screenshots/Screenshot_2026-04-29_002104.png)
+
+![Screenshot 3](Screenshots/Screenshot_2026-04-29_002121.png)
+
+
 
 =======================
