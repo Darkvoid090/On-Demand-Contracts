@@ -47,7 +47,9 @@ Contracts cannot be totally removed from saves because of serialization issues, 
 
 • ✅ Enabled toggle → hides the contract from the in-game list without removing it from the main contract list.
 
-• ❌ Delete         → hides the contract from the in-game list while also removing it from the main contract list. Moves the contract to the backup file OnDemandContracts_deleted_backup.json.
+• ❌ Delete         → hides the contract from the in-game list while also removing it from the main contract list.
+
+  Also Moves the contract to the backup file OnDemandContracts_deleted_backup.json.
 
 ---
 🚫 DO NOT EDIT OR REMOVE JSON FILES
@@ -57,14 +59,14 @@ Contracts cannot be totally removed from saves because of serialization issues, 
 
 ---
 
-# Screenshots
+# 📸 Screenshots:
 
-![Screenshot 1](Screenshots/Screenshot_2026-04-29_002034.png)
+<table>
+<tr>
+<td><img src="Screenshots/Screenshot_2026-04-29_002034.png" width="100%"></td>
+<td><img src="Screenshots/Screenshot_2026-04-29_002104.png" width="100%"></td>
+<td><img src="Screenshots/Screenshot_2026-04-29_002121.png" width="100%"></td>
+</tr>
+</table>
 
-![Screenshot 2](Screenshots/Screenshot_2026-04-29_002104.png)
-
-![Screenshot 3](Screenshots/Screenshot_2026-04-29_002121.png)
-
-
-
-=======================
+---
