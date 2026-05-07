@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://hub.coigame.com/Mod/49/On-Demand-Contracts">
+    <strong>⬇️ Download on COI Hub</strong>
+  </a>
+</p>
+
 ---
 
 <p align="center">
