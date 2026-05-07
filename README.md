@@ -1,3 +1,11 @@
+---
+
+<p align="center">
+  <img src="Thumbnail.png" width="256"/>
+</p>
+
+---
+
 ⚠️ Disclaimer: Use at your own risk.
 
 • This mod interacts with save-critical data (contracts), and incorrect deletion or modification can break saves.
@@ -6,11 +14,11 @@
 
 • Always keep a backup of your saves if you plan to experiment.
 
-=======================
+---
 
 📦 Adds a button inside the Contracts menu that lets you create your own custom world contracts.
 
-=======================
+---
 
 ⚙️ Customizable Parameters:
 
@@ -24,7 +32,7 @@
 
 ➕ Click "+", set values, press Save, then reload your save after that the contract will appear in-game
 
-=======================
+---
 
 ⚠️ IMPORTANT – READ THIS
 Contracts cannot be totally removed from saves because of serialization issues, only hidden (maybe possible but currently beyond my abilities), Therefore:
@@ -33,7 +41,7 @@ Contracts cannot be totally removed from saves because of serialization issues, 
 
 • ✅ If your save still uses it → It will load normally, provided you do not delete or modify OnDemandContracts_deleted_backup.json
 
-=======================
+---
 
 ✅ Enable vs ❌ Delete
 
@@ -41,14 +49,13 @@ Contracts cannot be totally removed from saves because of serialization issues, 
 
 • ❌ Delete         → hides the contract from the in-game list while also removing it from the main contract list. Moves the contract to the backup file OnDemandContracts_deleted_backup.json.
 
-=======================
-
+---
 🚫 DO NOT EDIT OR REMOVE JSON FILES
 
 • ❌ Deleting JSON = broken save.
 • ❌ Manually editing JSON = broken save.
 
-=======================
+---
 
 # Screenshots
 
