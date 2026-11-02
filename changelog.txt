@@ -6,7 +6,7 @@ v0.2.4:
 • Compatibilty with Update 4.3 (v0.8.8)
 • Due to changes in the game, it is currently no longer possible to add contracts to the starting village, it is now excluded from the village list
 =======================
-v0.2.4:
+v0.2.3:
 
 • Improved save compatibility for custom contracts.
 • Deleted contracts are now handled more safely and should no longer break saves in most cases.
