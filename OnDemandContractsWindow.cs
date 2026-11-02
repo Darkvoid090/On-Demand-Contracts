@@ -40,10 +40,13 @@ public class OnDemandContractsWindow : Window
         WindowSize(610.px(), Px.Auto);
 
         m_villages.AddRange(
-            protosDb.All<WorldMapVillageProto>()
-                .Where(v => v.Id.Value != "SettlementForShips")
-                .OrderBy(v => ExtractNumber(v.Id.Value))
-        );
+         protosDb.All<WorldMapVillageProto>()
+        .Where(v =>
+            v.Id.Value != "SettlementForShips" &&
+            v.Id.Value != "Settlement1"
+        )
+        .OrderBy(v => ExtractNumber(v.Id.Value))
+);
 
         m_products.AddRange(
         from p in protosDb.All<ProductProto>()
